@@ -12,7 +12,7 @@ Commands i terminalen:
 	<li> commit: git commit -m "beskjed"
 	<li> push: git push -u origin master
 </ul>
-Finner ut hvordan man pusher/lager branches
-Klone repoet:
-Finn mappen du vil bruke
-```git clone git@github.com:stianteien/instradag.git```
+Finner ut hvordan man pusher/lager branches<br>
+Klone repoet:<br>
+Finn mappen du vil bruke<br>
+`git clone git@github.com:stianteien/instradag.git`
