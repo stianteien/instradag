@@ -5,7 +5,6 @@
 	<li> leke oss litt med push, commit og pull
 </ul>
 La oss se hva vi kan gjøre
-
 <br><br>
 Commands i terminalen:
 <ul>
@@ -14,3 +13,6 @@ Commands i terminalen:
 	<li> push: git push -u origin master
 </ul>
 Finner ut hvordan man pusher/lager branches
+Klone repoet:
+Finn mappen du vil bruke
+```git clone git@github.com:stianteien/instradag.git```
