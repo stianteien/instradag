@@ -16,3 +16,4 @@ Finner ut hvordan man pusher/lager branches<br>
 Klone repoet:<br>
 Finn mappen du vil bruke<br>
 `git clone git@github.com:stianteien/instradag.git`
+Helt ny oppdatering
