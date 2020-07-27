@@ -1,2 +1,1 @@
-Hei, dette er en fil jeg gjør for å teste litt bracnehs
-Dette er en ny forandring slik at jeg kan få en ny commit og kanskje merge 
+Nå er det nest
