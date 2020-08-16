@@ -16,7 +16,8 @@ class rens:
     def clean_data(self, data):
         self.data = data
         self.data = self.data.rename(columns={self.data.columns[0]: "tid"})
-        
+        self.data = self.data.drop(columns=['Kjøper', 'Selger', 'Type'])
+
         count=0
         this_day = self.data.tid[0].day
         for i in self.data.tid:
