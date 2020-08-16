@@ -29,5 +29,16 @@ class rens:
 
         # Flipper opp ned
         self.data = self.data.iloc[::-1]
+    
+        # Legger til for stockstats
+        self.data['open'] = data.Pris
+        self.data['close'] = data.Pris
+        self.data['high'] = data.Pris
+        self.data['low'] = data.Pris
+        self.data['volume'] = data.Volum
+        self.data['amount'] = data.Volum
+        
+        self.data = self.data.drop(columns=['Pris', 'Volum'])
+        
         return self.data
         
