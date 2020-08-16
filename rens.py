@@ -7,7 +7,7 @@ and make data from the last day registered
 '''
 
 import pandas as pd
-
+fil = pd.read_excel('data/Aker 02.04.2020.xlsx')
 
 class rens:
     def __init__(self):
@@ -18,6 +18,7 @@ class rens:
         self.data = self.data.rename(columns={self.data.columns[0]: "tid"})
         self.data = self.data.drop(columns=['Kjøper', 'Selger', 'Type'])
 
+        # Finner kun fra dagen i dag
         count=0
         this_day = self.data.tid[0].day
         for i in self.data.tid:
@@ -26,6 +27,13 @@ class rens:
                 
         self.data = self.data[:count]
         self.data = self.data[5:]
+        
+        # Kun ett og ett minutt
+        every_min = []
+        for i in self.data.tid:
+            every_min.append(str(i.hour) +':'+ str(i.minute))
+        self.data.tid = every_min
+        self.data = self.data.drop_duplicates(subset='tid')
 
         # Flipper opp ned
         self.data = self.data.iloc[::-1]
@@ -42,3 +50,5 @@ class rens:
         
         return self.data
         
+my = rens()
+print(my.clean_data(fil))
