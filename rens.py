@@ -2,12 +2,14 @@
 16.08.2020
 Stian
 
-This file is used for cleaning up excel fil
-and make data from the last day registered
+This file is used for cleaning up excel fil by:
+removing dates
+just have 1 price per minute
+making ready for stockstats
 '''
 
 import pandas as pd
-fil = pd.read_excel('data/Aker 02.04.2020.xlsx')
+#fil = pd.read_excel('data/Aker 02.04.2020.xlsx')
 
 class rens:
     def __init__(self):
@@ -49,6 +51,7 @@ class rens:
         self.data = self.data.drop(columns=['Pris', 'Volum'])
         
         return self.data
+    
         
-my = rens()
-print(my.clean_data(fil))
+#my = rens()
+#print(my.clean_data(fil))
