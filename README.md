@@ -1,4 +1,13 @@
 # Instradag overskrift
+Todo:
+<ul>
+<li> py script for å se når det går bra
+<li> sette sammen indikatorer
+</ul>
+
+
+
+Olem:
 <ul>
 	<li> Last ned git bash
 	<li> få tilgang på repo
