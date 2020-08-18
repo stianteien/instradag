@@ -9,7 +9,7 @@ making ready for stockstats
 '''
 
 import pandas as pd
-#fil = pd.read_excel('data/Aker 02.04.2020.xlsx')
+#fil = pd.read_excel('../data/Aker 02.04.2020.xlsx')
 
 class rens:
     def __init__(self):
@@ -39,6 +39,9 @@ class rens:
 
         # Flipper opp ned
         self.data = self.data.iloc[::-1]
+        
+        # Resetter indexen
+        self.data = self.data.reset_index(drop=True)
     
         # Legger til for stockstats
         self.data['open'] = data.Pris
