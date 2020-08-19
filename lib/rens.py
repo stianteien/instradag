@@ -36,6 +36,8 @@ class rens:
             every_min.append(str(i.hour) +':'+ str(i.minute))
         self.data.tid = every_min
         self.data = self.data.drop_duplicates(subset='tid')
+        
+        # Prøv å legg til alle volum i samme och
 
         # Flipper opp ned
         self.data = self.data.iloc[::-1]
@@ -44,12 +46,12 @@ class rens:
         self.data = self.data.reset_index(drop=True)
     
         # Legger til for stockstats
-        self.data['open'] = data.Pris
-        self.data['close'] = data.Pris
-        self.data['high'] = data.Pris
-        self.data['low'] = data.Pris
-        self.data['volume'] = data.Volum
-        self.data['amount'] = data.Volum
+        self.data['open'] = self.data.Pris
+        self.data['close'] = self.data.Pris
+        self.data['high'] = self.data.Pris
+        self.data['low'] = self.data.Pris
+        self.data['volume'] = self.data.Volum
+        self.data['amount'] = self.data.Volum
         
         self.data = self.data.drop(columns=['Pris', 'Volum'])
         
@@ -57,4 +59,6 @@ class rens:
     
         
 #my = rens()
-#print(my.clean_data(fil))
+#a = (my.clean_data(fil))
+#print(a.head(10))
+#a.to_excel('../data/test.xlsx')
