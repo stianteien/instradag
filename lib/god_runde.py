@@ -9,6 +9,8 @@ Hvis siste 10 minuttene er bedre enn siste 20 er det en oppgang
 '''
 
 import pandas as pd
+import math
+import matplotlib.pyplot as plt
 fil = pd.read_excel('../data/test.xlsx')
 
 #siste_10min = dataframe['Pris'].iloc[i-5:i+1]
@@ -20,15 +22,28 @@ class positiv_utvikling:
     
     def calculate(self, data):
         self.data = data
+        self.df_utvikling = pd.DataFrame(columns= ['index', 'endex', 'close', 'score'])
+        utvikling = []
         
-        for ix, pris in self.data.close.iteritems(): #.close
+        for ix, pris in self.data.close.iteritems(): 
             if(ix >= 20):
-                siste_10min = self.data.close[ix-10:ix+1]
-                siste_20min = self.data.close[ix-20:ix+1]
+                siste_10min = self.data.close[ix-10:ix]
+                siste_20min = self.data.close[ix-20:ix]
+                utvikling.append(sum(siste_10min)/len(siste_10min) - sum(siste_20min)/len(siste_20min))
                 
-        print(siste_10min)
+        pos_utvikling = [0]
+        for i in utvikling:
+            if i > 0:
+                pos_utvikling.append(pos_utvikling[-1] + self.score_algo(i))
+                
+        plt.plot(pos_utvikling)
+        #print((utvikling))
         
         return self.data
+    
+    
+    def score_algo(self, score):
+        return math.sqrt(score)
     
     
 myp = positiv_utvikling()
