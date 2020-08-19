@@ -22,7 +22,6 @@ class positiv_utvikling:
     
     def calculate(self, data):
         self.data = data
-        self.df_utvikling = pd.DataFrame(columns= ['index', 'endex', 'start_pris', 'slutt_pris', 'score'])
         utvikling = []
         
         for ix, pris in self.data.close.iteritems(): 
@@ -40,15 +39,23 @@ class positiv_utvikling:
                 
         
         active_area = self.section_out()
+        utviklingdata = []
+        for start, stopp in active_area:
+            utviklingdata.append([start, stopp, 
+                                  self.data.close[start], self.data.close[stopp],
+                                  self.pos_utvikling[stopp]])
+            
+            
+        df_utvikling = pd.DataFrame(utviklingdata,
+                                         columns= ['index', 'endex', 'start_pris', 'slutt_pris', 'score'])
         
-        
-        return self.data
+        return df_utvikling
     
     
     def score_algo(self, score):
         return math.sqrt(math.sqrt(score))
     
-    def section_out(self):
+    def section_out(self, treshold=20):
         acitve_area = []
         acitve_indexes = []
         active_key = False
@@ -56,7 +63,7 @@ class positiv_utvikling:
             if score > 0:
                 acitve_indexes.append(ix)
                 
-                if score > 20:
+                if score > treshold:
                     active_key = True
                 
             if active_key and score == 0:
