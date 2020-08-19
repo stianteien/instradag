@@ -22,7 +22,7 @@ class positiv_utvikling:
     
     def calculate(self, data):
         self.data = data
-        self.df_utvikling = pd.DataFrame(columns= ['index', 'endex', 'close', 'score'])
+        self.df_utvikling = pd.DataFrame(columns= ['index', 'endex', 'start_pris', 'slutt_pris', 'score'])
         utvikling = []
         
         for ix, pris in self.data.close.iteritems(): 
@@ -31,20 +31,47 @@ class positiv_utvikling:
                 siste_20min = self.data.close[ix-20:ix]
                 utvikling.append(sum(siste_10min)/len(siste_10min) - sum(siste_20min)/len(siste_20min))
                 
-        pos_utvikling = [0]
+        self.pos_utvikling = [0]
         for i in utvikling:
             if i > 0:
-                pos_utvikling.append(pos_utvikling[-1] + self.score_algo(i))
+                self.pos_utvikling.append(self.pos_utvikling[-1] + self.score_algo(i))
+            else:
+                self.pos_utvikling.append(0)
                 
-        plt.plot(pos_utvikling)
-        #print((utvikling))
+        
+        active_area = self.section_out()
+        
         
         return self.data
     
     
     def score_algo(self, score):
-        return math.sqrt(score)
+        return math.sqrt(math.sqrt(score))
     
+    def section_out(self):
+        acitve_area = []
+        acitve_indexes = []
+        active_key = False
+        for ix, score in enumerate(self.pos_utvikling):
+            if score > 0:
+                acitve_indexes.append(ix)
+                
+                if score > 20:
+                    active_key = True
+                
+            if active_key and score == 0:
+                active_key = False
+                endex = ix-1
+                acitve_area.append( (acitve_indexes[0], endex) )
+                acitve_indexes = []
+            
+            if score == 0:
+                acitve_indexes = []
+ 
+        return acitve_area
+            
+        
+        
     
 myp = positiv_utvikling()
 myp.calculate(fil)
