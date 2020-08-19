@@ -43,7 +43,7 @@ class positiv_utvikling:
         for start, stopp in active_area:
             utviklingdata.append([start, stopp, 
                                   self.data.close[start], self.data.close[stopp],
-                                  (self.data.close[stopp]/self.data.close[start])-1,
+                                  ((self.data.close[stopp]/self.data.close[start])-1)*100,
                                   self.pos_utvikling[stopp]])
             
             
