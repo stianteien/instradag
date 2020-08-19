@@ -43,11 +43,12 @@ class positiv_utvikling:
         for start, stopp in active_area:
             utviklingdata.append([start, stopp, 
                                   self.data.close[start], self.data.close[stopp],
+                                  (self.data.close[stopp]/self.data.close[start])-1,
                                   self.pos_utvikling[stopp]])
             
             
         df_utvikling = pd.DataFrame(utviklingdata,
-                                         columns= ['index', 'endex', 'start_pris', 'slutt_pris', 'score'])
+                                         columns= ['start', 'endex', 'start_pris', 'slutt_pris','oppgang', 'score'])
         
         return df_utvikling
     
