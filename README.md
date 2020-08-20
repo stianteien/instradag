@@ -2,7 +2,7 @@
 Her kan vi finne ut av ting.<br><br>
 Her er et eksempel på hvor langt jeg har kommet. Jeg har funnet ut hvor det har gått bra. :)<br>
 Målet blir da å klare å lage en modell som hermer etter det.
-![eksempelbilde](images/eksempel.png)
+![eksempelbilde](images/eksempel.png)<br>
 ![eksempelbilde2](images/eksempel2.png)
 
 
