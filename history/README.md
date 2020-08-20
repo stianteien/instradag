@@ -11,4 +11,4 @@ Basert på den akumelerte scoren av positiv utvikling og prosentvis oppgang kan 
 Neste mål blir å koble indikatorer til oppgangene
 
 ### [06.08.2020]
-Start project
+Start project. Lastet opp fra colab og organisert.
