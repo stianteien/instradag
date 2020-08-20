@@ -10,7 +10,7 @@ import sys
 import pandas as pd
 import pathlib
 
-path = sys.path[0] + '/data/'
+path = sys.path[0] + '../data/'
 files = (os.listdir(path=path))
 
 for i in files:
