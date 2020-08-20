@@ -27,9 +27,9 @@ class positiv_utvikling:
         active_area = self.section_out()
         utviklingdata = []
         for start, stopp in active_area:
-            utviklingdata.append([start+10, stopp, 
-                                  self.data.close[start+10], self.data.close[stopp],
-                                  ((self.data.close[stopp]/self.data.close[start+10])-1)*100,
+            utviklingdata.append([start+10, stopp+10, 
+                                  self.data.close[start+10], self.data.close[stopp+10],
+                                  ((self.data.close[stopp+10]/self.data.close[start+10])-1)*100,
                                   self.pos_utvikling[stopp]])
             
             
