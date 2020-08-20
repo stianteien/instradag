@@ -1,9 +1,7 @@
-# Instradag overskrift
-Todo:
-<ul>
-<li> py script for å se når det går bra
-<li> sette sammen indikatorer
-</ul>
+# Instradag
+Her kan vi finne ut av ting.<br><br>
+Her er et eksempel på hvor langt jeg har kommet. Jeg har funnet ut hvor det har gått bra. :)
+![alt text](images/eksempel.png)
 
 
 
