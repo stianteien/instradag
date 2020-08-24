@@ -4,10 +4,10 @@ I denne filen kan man skrive historie/logg hvis man har lyst. Bilder er kult.
 ### [24.08.2020]
 Sett over 10 filer/dager og hentet ut 7 gode oppganger. Hentet ut fire indaktorer: rsi, trix, adxr og kdjk.<br>
 Her er resultatet og mønsteret fra dem. Trix er den eneste som har et øyeblikket gjenkjennelig mønster.
-![trix](../images/trixplot.png)
-![rsi](../images/rsiplot.png)
-![adxr](../images/adxrplot.png)
-![kdjk](../images/kdjkplot.png)
+![trix](../images/trixplot.png =200x)
+![rsi](../images/rsiplot.png =200x)
+![adxr](../images/adxrplot.png =200x)
+![kdjk](../images/kdjkplot.png =200x)
 
 ### [20.08.2020]
 Lagd fine grafer som gir en bilde av når oppgangen starter og slutter. Grønn er start, rød er slutt.
