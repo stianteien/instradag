@@ -53,7 +53,7 @@ class positiv_utvikling:
                 self.pos_utvikling.append(self.pos_utvikling[-1] + self.score_algo(i))
             else:
                 self.pos_utvikling.append(0)
-                
+
         
     
     def score_algo(self, score):
