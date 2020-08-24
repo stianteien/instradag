@@ -20,7 +20,7 @@ Nå har jeg funnet ut en grei måte å få til å se når det er positiv vekst i
 Basert på den akumelerte scoren av positiv utvikling og prosentvis oppgang kan jeg se hvilke oppganger jeg har lyst til å ta vare på<br>
 Neste mål blir å koble indikatorer til oppgangene.<br>
 <img src="../images/posutvikling.png" width="400"/>
-<img src="../images/posutviklingpris" width="400"/>
+<img src="../images/posutviklingpris.png" width="400"/>
 
 ### [06.08.2020]
 Start project. Lastet opp fra colab og organisert.
