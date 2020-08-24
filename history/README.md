@@ -4,7 +4,7 @@ I denne filen kan man skrive historie/logg hvis man har lyst. Bilder er kult.
 ### [24.08.2020]
 Sett over 10 filer/dager og hentet ut 7 gode oppganger. Hentet ut fire indaktorer: rsi, trix, adxr og kdjk.<br>
 Her er resultatet og mønsteret fra dem. Trix er den eneste som har et øyeblikket gjenkjennelig mønster.<br>
-<img src="../images/trixplot.png" alt="trix" width="220"/>
+<img trix src="../images/trixplot.png" alt="trix" width="220"/>
 <img src="../images/rsiplot.png" alt="rsi" width="220"/>
 <img src="../images/adxrplot.png" alt="adxr" width="220"/>
 <img src="../images/kdjkplot.png" alt="kdjk" width="220"/>
