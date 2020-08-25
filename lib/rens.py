@@ -26,18 +26,26 @@ class rens:
         for i in self.data.tid:
             if i.day == this_day:
                 count += 1
-                
+        
+        # Fjerner første som ofte er bugg        
         self.data = self.data[:count]
         self.data = self.data[5:]
         
         # Kun ett og ett minutt
         every_min = []
-        for i in self.data.tid:
-            every_min.append(str(i.hour) +':'+ str(i.minute))
+        volume_per_min = {}
+        for i,tiden in enumerate(self.data.tid):
+            every_min.append(str(tiden.hour) +':'+ str(tiden.minute))
+            if every_min[-1] not in volume_per_min:
+                volume_per_min[every_min[-1]] = self.data.iloc[i]['Volum']
+            else:
+                volume_per_min[every_min[-1]] += self.data.iloc[i]['Volum']
+            
         self.data.tid = every_min
         self.data = self.data.drop_duplicates(subset='tid')
         
-        # Prøv å legg til alle volum i samme och
+        # Legger til volum fra hvert minutt
+        self.data.Volum = list(volume_per_min.values())
 
         # Flipper opp ned
         self.data = self.data.iloc[::-1]
