@@ -5,10 +5,10 @@ I denne filen kan man skrive historie/logg hvis man har lyst. Bilder er kult.
 Skyter litt i blinde for å se etter gode indikatorer, så ønsker å prøve å lage en modell basert på det som ser bra nok ut til nå.<br>
 De som har gjort det bra er: trix, rsi, sma16-8 og macds.<br>
 Neste mål blir å lage en modell ut av disse<br>
-<img src="../images/trixplot_2.png" alt="trix" width="300"/>
-<img src="../images/rsiplot_2.png" alt="rsi" width="300"/>
-<img src="../images/sma8-16plot_2.png" alt="sma" width="300"/>
-<img src="../images/macdsplot_2.png" alt="macds" width="300"/>
+<img src="../images/trixplot_2.png" alt="trix" width="270"/>
+<img src="../images/rsiplot_2.png" alt="rsi" width="270"/>
+<img src="../images/sma8-16plot_2.png" alt="sma" width="270"/>
+<img src="../images/macdsplot_2.png" alt="macds" width="270"/>
 
 ### [24.08.2020]
 Sett over alle 80 filer/dager og hentet ut ca 35 gode løp med over 1 prosent stigning og score over 30.<br>
