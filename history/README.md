@@ -1,6 +1,14 @@
 # History
 I denne filen kan man skrive historie/logg hvis man har lyst. Bilder er kult.
 
+### [26.08.2020]
+Skyter litt i blinde for å se etter gode indikatorer, så ønsker å prøve å lage en modell basert på det som ser bra nok ut til nå.<br>
+De som har gjort det bra er: trix, rsi, sma16-8 og macds.<br>
+<img src="../images/trixplot_2.png" alt="trix" width="220"/>
+<img src="../images/rsiplot_2.png" alt="rsi" width="220"/>
+<img src="../images/sma16-8plot_2.png" alt="adxr" width="220"/>
+<img src="../images/macdsplot_2.png" alt="adxr" width="220"/>
+
 ### [24.08.2020]
 Sett over alle 80 filer/dager og hentet ut ca 35 gode løp med over 1 prosent stigning og score over 30.<br>
 Tatt å hentet ut fem indikatorer: trix, rsi, adxr, kdjk og pdi for å se hva de har å by på.<br>
