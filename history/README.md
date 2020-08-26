@@ -4,6 +4,7 @@ I denne filen kan man skrive historie/logg hvis man har lyst. Bilder er kult.
 ### [26.08.2020]
 Skyter litt i blinde for å se etter gode indikatorer, så ønsker å prøve å lage en modell basert på det som ser bra nok ut til nå.<br>
 De som har gjort det bra er: trix, rsi, sma16-8 og macds.<br>
+Neste mål blir å lage en modell ut av disse<br>
 <img src="../images/trixplot_2.png" alt="trix" width="220"/>
 <img src="../images/rsiplot_2.png" alt="rsi" width="220"/>
 <img src="../images/sma16-8plot_2.png" alt="adxr" width="220"/>
