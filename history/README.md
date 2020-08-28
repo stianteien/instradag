@@ -3,7 +3,7 @@ I denne filen kan man skrive historie/logg hvis man har lyst. Bilder er kult.
 
 ### [28.08.2020]
 Funnet mean og stdv for hver oppgang på de forskjellige indikatorene. Dataframenen ser fint ut:<br>
-<img src="../images/df_statistikk.png" alt="df"/>
+<img src="../images/df_statistikk.PNG" alt="df"/>
 
 ### [26.08.2020]
 Skyter litt i blinde for å se etter gode indikatorer, så ønsker å prøve å lage en modell basert på det som ser bra nok ut til nå.<br>
