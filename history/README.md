@@ -5,7 +5,7 @@ I denne filen kan man skrive historie/logg hvis man har lyst. Bilder er kult.
 Funnet mean og stdv for hver oppgang på de forskjellige indikatorene. Dataframenen ser fint ut:<br>
 <img src="../images/df_statistikk.PNG" alt="df"/><br>
 Her er trix med stdv for å avgrense hvor man kan ligge innenfor. Nå regnes det med 2 stdv for å få ca. 95% av innenfor.<br>
-Kan se om jeg finner noen statistikktabeller for å finne ut av nøyaktig z*.
+Kan se om jeg finner noen statistikktabeller for å finne ut av nøyaktig z*.<br>
 <img src="../images/trix_med_stdv.png" alt="df"/><br>
 
 ### [26.08.2020]
