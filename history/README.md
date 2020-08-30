@@ -4,7 +4,7 @@ I denne filen kan man skrive historie/logg hvis man har lyst. Bilder er kult.
 ### [30.08.2020]
 Satt sammen første trade plot basert på modellen. Oppgangen er der den vil holde posisjon og ned er der den vil være ute.<br>
 Det var sånn passe vellykket. Det virker som den ikke helt vil legge inn posisjon i oppganene men kun når det er flatt..<br>
-<img src="../images/firsttradeplot.PNG" alt="df"/><br>
+<img src="../images/firsttradeplot.png" alt="df"/><br>
 
 ### [28.08.2020]
 Funnet mean og stdv for hver oppgang på de forskjellige indikatorene. Dataframenen ser fint ut:<br>
