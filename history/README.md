@@ -1,6 +1,13 @@
 # History
 I denne filen kan man skrive historie/logg hvis man har lyst. Bilder er kult.
 
+### [16.09.2020]
+Jeg er ikke helt overbevist over standardavvik-tilnærming, så tester jeg ut maskinlæringsmodeller.  
+Først tester jeg RNN med LSTM. Her tester jeg og trene på samme datasett bare for å vise at det kan funke.  
+Det andre bildet er kun basert på RSI. Gir noe utslag i slutten som er bra.  
+<img src="../images/RNN_on_price.png" alt="df"/><br>
+<img src="../images/RNN_on_RSI.png" alt="df"/><br>
+
 ### [30.08.2020]
 Satt sammen første trade plot basert på modellen. Oppgangen er der den vil holde posisjon og ned er der den vil være ute.<br>
 Det var sånn passe vellykket. Det virker som den ikke helt vil legge inn posisjon i oppganene men kun når det er flatt..<br>
