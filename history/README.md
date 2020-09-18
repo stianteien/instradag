@@ -1,6 +1,11 @@
 # History
 I denne filen kan man skrive historie/logg hvis man har lyst. Bilder er kult.
 
+### [18.09.2020]
+Normalisert ydata for å få en spredning som er lettere å lære for RNN.  
+Trener på den deriverte 30sma for å standardisere prisvekst.  
+<img src="../images/RNN_on_derivert30sma.png" alt="df"/><br>
+
 ### [16.09.2020]
 Jeg er ikke helt overbevist over standardavvik-tilnærming, så tester jeg ut maskinlæringsmodeller.  
 Først tester jeg RNN med LSTM. Her tester jeg og trene på samme datasett bare for å vise at det kan funke.  
