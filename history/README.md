@@ -6,7 +6,7 @@ Funnet ut hvordan jeg kan ha flere feauters (x) inn i det trente nettverket.
 Trente på en runde og fikk ganske godt resultat når jeg kjørte prediksjonen på andre testsett. 
 <img src="../images/RNN_on_untrained.png" alt="df"/><br><br>
 
-
+### [18.09.2020]
 Normalisert ydata for å få en spredning som er lettere å lære for RNN.  
 Trener på den deriverte 30sma for å standardisere prisvekst.  
 <img src="../images/RNN_on_derivert30sma.png" alt="df"/><br>
