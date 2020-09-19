@@ -1,6 +1,11 @@
 # History
 I denne filen kan man skrive historie/logg hvis man har lyst. Bilder er kult.
 
+### [19.09.2020]
+Funnet ut hvordan man kan bruke se fremover flere enn ett skritt. Nå ser jeg fremover 15 skritt basert på  
+de 30 bak. Da gir det en kurve som har ser ganske grei ut med tanke på at det kan være mye feil.
+<img src="../images/RNN_15_ahead.png" alt="df"/><br>
+
 ### [18.09.2020]
 Funnet ut hvordan jeg kan ha flere feauters (x) inn i det trente nettverket.  
 Trente på en runde og fikk ganske godt resultat når jeg kjørte prediksjonen på andre testsett. 
