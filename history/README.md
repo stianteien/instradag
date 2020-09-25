@@ -1,6 +1,12 @@
 # History
 I denne filen kan man skrive historie/logg hvis man har lyst. Bilder er kult.
 
+### [25.09.2020]
+Standarisert slik at alle de predikerte område har spenner over samme område (mean=1, std=.006)  
+Nå klarer den å komme med et ganske godt forslag på utrent data. Neste punkt blir å finne ut når dette faktisk er positivt.  
+Ser 30 tilbake og forslår 10 fremover.  
+<img src="../images/RNN_10_ahead.png" alt="df"/><br>
+
 ### [19.09.2020]
 Funnet ut hvordan man kan bruke se fremover flere enn ett skritt. Nå ser jeg fremover 15 skritt basert på  
 de 30 bak. Da gir det en kurve som har ser ganske grei ut med tanke på at det kan være mye feil.
