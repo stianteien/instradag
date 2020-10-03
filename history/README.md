@@ -1,6 +1,15 @@
 # History
 I denne filen kan man skrive historie/logg hvis man har lyst. Bilder er kult.
 
+### [03.10.2020]
+Lagt til kjøpsforslag basert på RNN. Funker bra.
+<img src="../images/RNN_buy_forslag.png" alt="df"/><br>
+
+### [02.10.2020]
+Klart å gjennomsnittet av prediksjonene. Det var vanskeligere enn først antatt.  
+Liten tanke er at jeg faktisk vil ha færre og færre å ta gj.snitt av "live". Kanskje det kan vekstes?  
+<img src="../images/RNN_avg.png" alt="df"/><br>
+
 ### [25.09.2020]
 Standarisert slik at alle de predikerte område har spenner over samme område (mean=1, std=.006)  
 Nå klarer den å komme med et ganske godt forslag på utrent data. Neste punkt blir å finne ut når dette faktisk er positivt.  
