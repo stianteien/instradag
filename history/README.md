@@ -2,7 +2,7 @@
 I denne filen kan man skrive historie/logg hvis man har lyst. Bilder er kult.
 
 ### [03.10.2020]
-Lagt til kjøpsforslag basert på RNN. Funker bra.
+Lagt til kjøpsforslag basert på RNN. Funker bra.  
 <img src="../images/RNN_buy_forslag.png" alt="df"/><br>
 
 ### [02.10.2020]
