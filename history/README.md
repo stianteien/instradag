@@ -5,7 +5,7 @@ I denne filen kan man skrive historie/logg hvis man har lyst. Bilder er kult.
 Lagt til akumulerte summen av den deriverte git kjøpsforslag. Et av de bedre for å se hvordan det funker på en  
 god stigende trend.  
 Lagt ved dataframen under slik man ser nøyaktig gevinst.  
-<img src="../images/RNN_w_df.PNG" alt="df"/><br>
+<img src="../images/RNN_w_df.PNG" width="400" alt="df"/><br>
 
 ### [03.10.2020]
 Lagt til kjøpsforslag basert på RNN. Funker bra.<br>
