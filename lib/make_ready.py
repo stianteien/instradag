@@ -13,6 +13,8 @@ import numpy as np
 import stockstats
 from lib.rens import rens
 
+pd.options.mode.use_inf_as_na = True
+
 
 class make_ready:
     def __init__(self):
@@ -36,6 +38,8 @@ class make_ready:
             stock['derivert'] = [stock.open[i] / stock.open[i-1] if i>1 else 1
                                  for i, value in enumerate(stock.open)]
     
+            # Fill nan verdier med 0
+            stock.fillna(.5)
             stocks.append(stock)
         
         return stocks
