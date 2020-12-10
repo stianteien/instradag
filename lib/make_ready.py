@@ -19,6 +19,7 @@ class make_ready:
         pass
     
     def use_stockstats(self, filer):
+        # Return stocks as a list of pd dataframes
         stocks = []
         for i, fil in enumerate(filer):
             print(f"{i+1} av {len(filer)} renset" ,end='\r')
