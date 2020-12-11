@@ -10,6 +10,7 @@ import os
 import sys
 import pandas as pd
 import pathlib
+import datetime
 
 path = '../lib/'
 files = (os.listdir(path=path))
@@ -29,14 +30,16 @@ for fil in files:
         
         # Change time from yyyy-mm-dd hh:mm to dd.mm.yyyy hh:mm:ss
         data['time'] = pd.to_datetime(data['time'])
-        data['time'] = data['time'].dt.strftime('%dd.%mm.%YYYY %h:%MM:%ss')
+        data['time'] = data['time'].dt.strftime('%d.%m.%y %H:%M:%S')
         
         # Flip the shit
         data = data.iloc[::-1]
         data = data.reset_index(drop=True)
         
         # Lagre as .xlsx
-        data.to_excel('test.xlsx', index=False)
+        #navn + data
+        tid = pd.to_datetime(data['time'].iloc[0]).strftime('%d.%m.%y')
+        data.to_excel(navn+' '+tid+'.xlsx', index=False)
         
         # Bare flipp hele rundt.
         #siste_dato = data['time'].iloc[-1]
