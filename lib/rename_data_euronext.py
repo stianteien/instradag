@@ -39,7 +39,7 @@ for fil in files:
         # Lagre as .xlsx
         #navn + data
         tid = pd.to_datetime(data['time'].iloc[0]).strftime('%d.%m.%Y')
-        data.to_excel(navn+' '+tid+'.xlsx', index=False)
+        data.to_excel(path + navn+' '+tid+'.xlsx', index=False)
         
         # delete old file?
         try:
