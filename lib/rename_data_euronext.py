@@ -17,7 +17,7 @@ files = (os.listdir(path=path))
 
 for fil in files:
     if ('quote' in fil and '.csv' in fil):
-        data = pd.read_csv(fil)
+        data = pd.read_csv(path + fil)
         
         # Gjør den lik som det andre.
         data['Kjøper'] = [0 for i in range(len(data['time']))]
@@ -29,7 +29,7 @@ for fil in files:
         data = data.rename(columns={data.columns[1]: 'Pris', data.columns[2]: 'Volum'})
         
         # Change time from yyyy-mm-dd hh:mm to dd.mm.yyyy hh:mm:ss
-        data['time'] = pd.to_datetime(data['time'])
+        data['time'] = pd.to_datetime(data['time'], format='%Y-%m-%d %H:%M')
         data['time'] = data['time'].dt.strftime('%d.%m.%Y %H:%M:%S')
         
         # Flip the shit
@@ -38,12 +38,12 @@ for fil in files:
         
         # Lagre as .xlsx
         #navn + data
-        tid = pd.to_datetime(data['time'].iloc[0]).strftime('%d.%m.%Y')
+        tid = pd.to_datetime(data['time'].iloc[0], format='%d.%m.%Y %H:%M:%S').strftime('%d.%m.%Y')
         data.to_excel(path + navn+' '+tid+'.xlsx', index=False)
         
         # delete old file?
         try:
-            os.remove(fil)
+            os.remove(path+fil)
             print(f"Gjort om {fil}")
         except Exception as e:
             print(e)
