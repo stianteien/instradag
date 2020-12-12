@@ -41,11 +41,14 @@ for fil in files:
         tid = pd.to_datetime(data['time'].iloc[0]).strftime('%d.%m.%y')
         data.to_excel(navn+' '+tid+'.xlsx', index=False)
         
-        # Bare flipp hele rundt.
-        #siste_dato = data['time'].iloc[-1]
-        
-        #data.columns = 
-        #print(navn)
+        # delete old file?
+        try:
+            os.remove(fil)
+            print(f"Gjort om {fil}")
+        except Exception as e:
+            print(e)
+            
+       
         
 
-#print(siste_dato)    
+print("---DONE---")    
