@@ -64,9 +64,9 @@ def r2_score_nn(y_true, y_pred):
 
 
 model = Sequential()
-model.add(LSTM(units=64, input_dim=5, return_sequences=True))
+model.add(LSTM(units=256, input_dim=5, return_sequences=True))
 model.add(Dropout(0.2))
-model.add(LSTM(units=64, return_sequences=False))
+model.add(LSTM(units=256, return_sequences=False))
 model.add(Dropout(0.2))
 model.add(Dense(10))
 
@@ -78,7 +78,7 @@ model.compile(optimizer='adam', loss='mse', metrics=['mae', r2_score_nn])
 # =============================================================================
 
 history = model.fit(X_train, y_train, validation_data=(X_test, y_test),
-                    epochs=10, batch_size=64, verbose=0)
+                    epochs=400, batch_size=64, verbose=0)
 
 
 # =============================================================================
@@ -87,8 +87,8 @@ history = model.fit(X_train, y_train, validation_data=(X_test, y_test),
 
 pd.DataFrame({"loss": history.history["loss"],
               "val_loss": history.history["val_loss"],
-              "f1": history.history["r2_score_nn"],
-              "f1_val": model.history.history["val_r2_score_nn"]}).to_csv(save_folder + "/losses_and_r2.csv", index=False)
+              "r2": history.history["r2_score_nn"],
+              "r2_val": model.history.history["val_r2_score_nn"]}).to_csv(save_folder + "/losses_and_r2.csv", index=False)
 
 
 toc = time.time()
@@ -96,4 +96,4 @@ f = open(save_folder + "/tidsbrukt.txt","w+")
 f.write("tid brukt: "+ str(toc-tic ))
 f.close()
 
-print("---Ferdig----")
+print(f" ============ Ferdig paa {toc-tic}  =============")
