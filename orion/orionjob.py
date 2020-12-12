@@ -88,10 +88,12 @@ history = model.fit(X_train, y_train, validation_data=(X_test, y_test),
 pd.DataFrame({"loss": history.history["loss"],
               "val_loss": history.history["val_loss"],
               "f1": history.history["r2_score_nn"],
-              "f1_val": model.history.history["val_r2_score_nn"]}).to_csv(save_folder + "/losses.csv", index=False)
+              "f1_val": model.history.history["val_r2_score_nn"]}).to_csv(save_folder + "/losses_and_r2.csv", index=False)
 
 
 toc = time.time()
-with open(save_folder + 'tidsbruk.txt', 'w+') as f:
-    f.write("tidsbruk i sekunder:" + str(toc-tic))
-    f.close()
+f = open(save_folder + "/tidsbrukt.txt","w+")
+f.write("tid brukt: "+ str(toc-tic ))
+f.close()
+
+print("---Ferdig----")
