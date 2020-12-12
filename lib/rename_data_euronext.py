@@ -12,7 +12,7 @@ import pandas as pd
 import pathlib
 import datetime
 
-path = '../lib/'
+path = '../data/'
 files = (os.listdir(path=path))
 
 for fil in files:
@@ -30,7 +30,7 @@ for fil in files:
         
         # Change time from yyyy-mm-dd hh:mm to dd.mm.yyyy hh:mm:ss
         data['time'] = pd.to_datetime(data['time'])
-        data['time'] = data['time'].dt.strftime('%d.%m.%y %H:%M:%S')
+        data['time'] = data['time'].dt.strftime('%d.%m.%Y %H:%M:%S')
         
         # Flip the shit
         data = data.iloc[::-1]
@@ -38,7 +38,7 @@ for fil in files:
         
         # Lagre as .xlsx
         #navn + data
-        tid = pd.to_datetime(data['time'].iloc[0]).strftime('%d.%m.%y')
+        tid = pd.to_datetime(data['time'].iloc[0]).strftime('%d.%m.%Y')
         data.to_excel(navn+' '+tid+'.xlsx', index=False)
         
         # delete old file?
