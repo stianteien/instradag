@@ -10,6 +10,7 @@ import numpy as np
 import pickle
 import argparse
 import time
+import matplotlib.pyplot as plt
 
 from tensorflow.keras.layers import Dense, LSTM, Dropout, Input
 from tensorflow.keras.models import Sequential
@@ -65,6 +66,8 @@ def r2_score_nn(y_true, y_pred):
 
 model = Sequential()
 model.add(LSTM(units=256, input_dim=5, return_sequences=True))
+model.add(Dropout(0.2))
+model.add(LSTM(units=256, return_sequences=True))
 model.add(Dropout(0.2))
 model.add(LSTM(units=256, return_sequences=False))
 model.add(Dropout(0.2))
