@@ -46,14 +46,14 @@ class make_ready:
                 
         return stock
     
-    def use_stockstats(self, filer):
+    def use_stockstats(self, filer, indikatorer):
         # Return stocks as a list of pd dataframes
         stocks = []
         for i, fil in enumerate(filer):
             print(f"{i+1} av {len(filer)} renset" ,end='\r')
             data = rens().clean_data(pd.read_excel(fil))
             stock = stockstats.StockDataFrame.retype(data)
-            indikatorer = ['rsi_20', 'trix', 'open_8_sma', 'open_16_sma', 'macds', 'open_30_sma', 'open_15_sma']
+            #indikatorer = ['rsi_20', 'trix', 'open_8_sma', 'open_16_sma', 'macds', 'open_30_sma', 'open_15_sma']
             for ind in indikatorer:
                 stock.get(ind)
             stock['sma8-16'] = [stock.open_8_sma[i] - stock.open_16_sma[i] for i, value in enumerate(stock.open_8_sma)]
