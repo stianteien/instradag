@@ -20,6 +20,32 @@ class make_ready:
     def __init__(self):
         pass
     
+    #Commented out blocks did not have nan
+    def fillna(self, stock):
+        for col in stock.columns:
+            if ('rsi' in col):
+                stock[col] = stock[col].fillna(100) #First values usually 100 in rsi
+            #elif ('macd' in col):
+                #stock[col] = stock[col].fillna(100) #First values usually 100 in macd
+            elif ('trix' in col):
+                stock[col] = stock[col].fillna(0.01) #First values usually 0.01 in trix
+            elif ('wr' in col):
+                stock[col] = stock[col].fillna(20) #First values usually around 20 in wr
+            elif ('mstd' in col):
+                stock[col] = stock[col].fillna(0.01) #First values usually 0.01 in mstd
+            elif ('vr' in col):
+                stock[col] = stock[col].fillna(200) #First values usually 200 in vr
+            #elif ('dma' in col):
+                #stock[col] = stock[col].fillna(100) #First values usually 100 in rsi
+            elif ('atr' in col):
+                stock[col] = stock[col].fillna(1) #First values usually 100 in atr
+            elif ('adx' in col):
+                stock[col] = stock[col].fillna(100) #First values usually 100 in adx
+            elif ('cci' in col):
+                stock[col] = stock[col].fillna(100) #First values usually 100 in cci
+                
+        return stock
+    
     def use_stockstats(self, filer):
         # Return stocks as a list of pd dataframes
         stocks = []
@@ -38,8 +64,8 @@ class make_ready:
             stock['derivert'] = [stock.open[i] / stock.open[i-1] if i>1 else 1
                                  for i, value in enumerate(stock.open)]
     
-            # Fill nan verdier med .5
-            stock = stock.fillna(.5)
+            # Fill nan verdier med tilpassede initialverdier
+            stock = self.fillna(stock)
             stocks.append(stock)
         
         return stocks
