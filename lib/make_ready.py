@@ -22,38 +22,24 @@ class make_ready:
     
     #Commented out blocks did not have nan
     def fillna(self, stock):
-        for col in stock.columns:
-            if ('rsi' in col):
-                stock[col] = stock[col].fillna(100) #First values usually 100 in rsi
-            #elif ('macd' in col):
-                #stock[col] = stock[col].fillna(100) #First values usually 100 in macd
-            elif ('trix' in col):
-                stock[col] = stock[col].fillna(0.01) #First values usually 0.01 in trix
-            elif ('wr' in col):
-                stock[col] = stock[col].fillna(20) #First values usually around 20 in wr
-            elif ('mstd' in col):
-                stock[col] = stock[col].fillna(0.01) #First values usually 0.01 in mstd
-            elif ('vr' in col):
-                stock[col] = stock[col].fillna(200) #First values usually 200 in vr
-            #elif ('dma' in col):
-                #stock[col] = stock[col].fillna(100) #First values usually 100 in rsi
-            elif ('atr' in col):
-                stock[col] = stock[col].fillna(1) #First values usually 100 in atr
-            elif ('adx' in col):
-                stock[col] = stock[col].fillna(100) #First values usually 100 in adx
-            elif ('cci' in col):
-                stock[col] = stock[col].fillna(100) #First values usually 100 in cci
+        values = {'rsi': 100, 'trix': 0.01, 'wr':20, 'mstd':0.01, 'vr': 200, 
+                  'atr':1, 'axd':100, 'cci':100, 'dma': 100, 'macd':100}
+        
+        for key in values:
+            if key in stock.columns:
+                # legg ved en evt if nan in coln (for å spare "tid")
+                stock[key] = stock[key].filna(values[key])
                 
         return stock
     
-    def use_stockstats(self, filer, indikatorer):
+    def use_stockstats(self, filer):
         # Return stocks as a list of pd dataframes
         stocks = []
         for i, fil in enumerate(filer):
             print(f"{i+1} av {len(filer)} renset" ,end='\r')
             data = rens().clean_data(pd.read_excel(fil))
             stock = stockstats.StockDataFrame.retype(data)
-            #indikatorer = ['rsi_20', 'trix', 'open_8_sma', 'open_16_sma', 'macds', 'open_30_sma', 'open_15_sma']
+            indikatorer = ['rsi_20', 'trix', 'open_8_sma', 'open_16_sma', 'macds', 'open_30_sma', 'open_15_sma']
             for ind in indikatorer:
                 stock.get(ind)
             stock['sma8-16'] = [stock.open_8_sma[i] - stock.open_16_sma[i] for i, value in enumerate(stock.open_8_sma)]
