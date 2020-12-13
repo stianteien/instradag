@@ -9,6 +9,7 @@ making ready for stockstats
 '''
 
 import pandas as pd
+#fil = pd.read_excel('../data/test/Equinor 12.11.2020.xlsx')
 #fil = pd.read_excel('../data/Aker 02.04.2020.xlsx')
 
 class rens:
@@ -19,6 +20,8 @@ class rens:
         self.data = data
         self.data = self.data.rename(columns={self.data.columns[0]: "tid"})
         self.data = self.data.drop(columns=['Kjøper', 'Selger', 'Type'])
+        if type(self.data.tid[0]) == str:
+            self.data['tid'] = pd.to_datetime(self.data['tid'], format='%d.%m.%Y %H:%M:%S')
 
         # Finner kun fra dagen i dag
         count=0
@@ -27,9 +30,9 @@ class rens:
             if i.day == this_day:
                 count += 1
         
-        # Fjerner første som ofte er bugg        
+        
+        # Henter det jeg skal   
         self.data = self.data[:count]
-        self.data = self.data[5:]
         
         # Kun ett og ett minutt
         every_min = []
@@ -40,6 +43,7 @@ class rens:
                 volume_per_min[every_min[-1]] = self.data.iloc[i]['Volum']
             else:
                 volume_per_min[every_min[-1]] += self.data.iloc[i]['Volum']
+                
             
         self.data.tid = every_min
         self.data = self.data.drop_duplicates(subset='tid')
