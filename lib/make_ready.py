@@ -22,14 +22,10 @@ class make_ready:
     
     #Commented out blocks did not have nan
     def fillna(self, stock):                
-        values = {'rsi': 100, 'trix': 0.01, 'wr':20, 'mstd':0.01, 'vr': 200, 
-                  'atr':1, 'axd':100, 'cci':100, 'dma': 100, 'macd':100}
 
-        for key in values:
-            if key in stock.columns:
-                # legg ved en evt if nan in coln (for å spare "tid")
-                stock[key] = stock[key].filna(values[key])
-                
+        mean_values = {col:np.mean(stock[col]) for col in stock.drop(stock.columns[0], axis=1)}
+        stock = stock.fillna(value=mean_values)
+
         return stock
     
     def use_stockstats(self, filer):
