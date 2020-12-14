@@ -20,12 +20,10 @@ class make_ready:
     def __init__(self):
         pass
     
-    #Commented out blocks did not have nan
     def fillna(self, stock):                
 
         mean_values = {col:np.mean(stock[col]) for col in stock.drop(stock.columns[0], axis=1)}
         stock = stock.fillna(value=mean_values)
-
         return stock
     
     def use_stockstats(self, filer):

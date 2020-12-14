@@ -13,10 +13,9 @@ import os
 import pytest
 import sys
 
-#from .lib import make_ready
-#from ..lib.rens import rens
 from lib.rens import rens
 from lib.make_ready import make_ready
+from lib.create_dataset import create_dataset
 
 data = pd.read_excel('../data/Aker 02.04.2020.xlsx')
 filnavn = ['../data/Aker 02.04.2020.xlsx']
@@ -51,16 +50,26 @@ def test_use_stockstats():
     data = m.use_stockstats(filnavn)
     
     assert data[0].isnull().values.any() == False, "Noen verdier er nan"
+
     
+# Create dataset
+def test_create_dataset_make():
+    c = create_dataset()
+    
+def test_create_dataset_data():
+    test_data = make_ready().use_stockstats(filnavn)
+    c = create_dataset()
+    look_back = 10; look_forward = 10
+    x, y, z = c.create(test_data[0][['macd', 'rsi_20', 'sma8-16', 'trix', 'volume']],
+                       test_data[0].sma30_derivert,
+                       look_back = look_back,
+                       look_forward = look_forward)
+    
+    assert x.shape[1] == look_back, "lookback correction"
+    assert y.shape[1] == look_forward, "lookfowrdad"
+    assert x.shape[2] > 0, "x amount of feacuters"
+    assert x.shape[0] == y.shape[0], "same amount of answers"
     
     
 
-    
-
-    
-
-
-
-## Test make_ready
-#stocks = make_ready().use_stockstats(data, )
 
