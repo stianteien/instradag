@@ -19,7 +19,7 @@ from lib.rename_data_euronext import rename_data_euronext
 # Make dummy data
 # =============================================================================
 
-def test_make_dummy(): #vil ikke lagre ssseeeg!
+def test_make_dummy():
     dummy_data = np.array([['2020-12-14 16:04',"517.5","299"],
                         ['2020-12-14 16:06',"518.5","226"],
                         ['2020-12-14 16:07',"518","356"],
@@ -34,7 +34,8 @@ def test_make_dummy(): #vil ikke lagre ssseeeg!
     
     data = pd.DataFrame(dummy_data, columns=['time',"dummy","dummy( volume )"])
     data.to_csv('../tests/dummy_quote_data.csv', index=False)
-    #assert 2==3
+    data = data.rename(columns={'time':'dummy'})
+    data.to_excel('../tests/dummy_data.xlsx', index=False)
 
 
 # =============================================================================
@@ -45,14 +46,28 @@ def test_make_dummy(): #vil ikke lagre ssseeeg!
 def test_rename_euronext():
     re = rename_data_euronext()
     re.path = '../tests/'
-    re.files = ['dummy_data.csv']
+    re.files = ['dummy_quote_data.csv']
     
 def test_rename_euronext_rename():
     re = rename_data_euronext()
     re.path = '../tests/'
     re.files = ['dummy_quote_data.csv']
     re.rename()
-
+    
+    
+# Old file rename, not used anymore..
+'''
+def rest_rename_old():
+    re = rename_data()
+    re.path = '../tests/'
+    re.files = ['dummy_data.xlsx']
+    
+def rest_rename_old():
+    re = rename_data()
+    re.path = '../tests/'
+    re.files = ['dummy_data.xlsx']
+    re.rename()
+'''
 
 
 # =============================================================================
@@ -61,3 +76,4 @@ def test_rename_euronext_rename():
 
 def test_remove_file():
     os.remove('../tests/dummy 14.12.2020.xlsx')
+    os.remove('../tests/dummy_data.xlsx')
