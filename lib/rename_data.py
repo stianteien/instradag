@@ -10,23 +10,29 @@ import sys
 import pandas as pd
 import pathlib
 
-path = '../data/'
-files = (os.listdir(path=path))
-
-for i in files:
-    if ('data' in i and '.xlsx' in i):
-        fil = pd.read_excel(path + i)
-        navn = fil.columns[0]+' '
-        dato = fil.iloc[0,0].strftime("%d.%m.%Y")
-
-        old_path = (os.path.join(path, i))
-        new_path = (os.path.join(path, navn+dato+'.xlsx'))
+class rename_data:
+    def __init__(self):
+        self.path = '../data/'
+        self.files = (os.listdir(path=self.path))
+    
+    def rename(self):
+        for i in self.files:
+            if ('data' in i and '.xlsx' in i):
+                fil = pd.read_excel(self.path + i)
+                navn = fil.columns[0]+' '
+                dato = fil.iloc[0,0].strftime("%d.%m.%Y")
         
-        try:
-            os.rename(old_path, new_path)
-            print('Byttet:',navn+dato)
-        except:
-            print('could not make rename file: ',old_path)
-
-print('---DONE---')
+                old_path = (os.path.join(self.path, i))
+                new_path = (os.path.join(self.path, navn+dato+'.xlsx'))
+                
+                try:
+                    os.rename(old_path, new_path)
+                    print('Byttet:',navn+dato)
+                except:
+                    print('could not make rename file: ',old_path)
         
+        print('---DONE---')
+        
+        
+# Run script
+rename_data().rename()
