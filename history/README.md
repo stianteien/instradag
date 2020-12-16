@@ -1,6 +1,12 @@
 # History
 I denne filen kan man skrive historie/logg hvis man har lyst. Bilder er kult.
 
+### [16.12.2020]
+En ide som kom fram var å trene på formiddag og predikere på ettermiddagen. Siden forskjellen mellom hver aksje var så stor  
+kunne det være at de forskjellige mønsterene å i aksjene. Etter å ha prøvd - kun på en aksje riktignok - viste det seg at  
+r2 scoren (~0.32) ikke ble noe spesielt bedre og konkluderer med at det ikke helt er det store.
+<img src="../images/treneformiddag.png" width="500" alt="df"/><br>
+
 ### [06.10.2020]
 Lagt til akumulerte summen av den deriverte git kjøpsforslag. Et av de bedre for å se hvordan det funker på en  
 god stigende trend.  
