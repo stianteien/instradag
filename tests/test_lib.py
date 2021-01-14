@@ -16,8 +16,8 @@ from lib.rens import rens
 from lib.make_ready import make_ready
 from lib.create_dataset import create_dataset
 
-data = pd.read_excel('../data/Aker 02.04.2020.xlsx')
-filnavn = ['../data/Aker 02.04.2020.xlsx']
+data = pd.read_excel('../data/Aker BP 11.12.2020.xlsx')
+filnavn = ['../data/Aker BP 11.12.2020.xlsx']
 
 # Rensefilen
 def test_rens_make(): 
