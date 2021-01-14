@@ -1,6 +1,10 @@
 # History
 I denne filen kan man skrive historie/logg hvis man har lyst. Bilder er kult.
 
+### [14.01.2021]
+I juleferien har jeg sett på Reinformance learning og har troa på at det er mulig å trene opp en agent til å handle.  
+Satt opp et miljø (environment) som er mulig å bruke et deep q nettverk på. Tar ca 1 minutt å trene en aksjedag, så tar litt lang tid.
+
 ### [16.12.2020]
 En ide som kom fram var å trene på formiddag og predikere på ettermiddagen. Siden forskjellen mellom hver aksje var så stor  
 kunne det være at de forskjellige mønsterene å i aksjene. Etter å ha prøvd - kun på en aksje riktignok - viste det seg at  
