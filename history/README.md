@@ -1,6 +1,11 @@
 # History
 I denne filen kan man skrive historie/logg hvis man har lyst. Bilder er kult.
 
+### [15.01.2021]
+Satt opp mulighet til å se grafisk hvor det handler. Etter 10 episoder handler den 70-90 handler og det er aaalt for mye.  
+Her ser man hvordan det kan se ut. Grønn er kjøp og rød er salg  
+<img src="../images/rl_mange_handler.PNG" width="500" alt="df"/><br>
+
 ### [14.01.2021]
 I juleferien har jeg sett på Reinformance learning og har troa på at det er mulig å trene opp en agent til å handle.  
 Satt opp et miljø (environment) som er mulig å bruke et deep q nettverk på. Tar ca 1 minutt å trene en aksjedag, så tar litt lang tid.
