@@ -6,7 +6,7 @@ Created on Wed Dec 23 19:56:26 2020
 """
 
 
-from tensorflow.keras.layers import Dense, Activation
+from tensorflow.keras.layers import Dense, Activation, LSTM, Dropout
 from tensorflow.keras.models import Sequential, load_model
 from tensorflow.keras.optimizers import Adam
 import numpy as np
@@ -16,8 +16,8 @@ class ReplayBuffer(object):
     def __init__(self, max_size, input_shape, n_actions, discrete=False):
         self.mem_size = max_size
         self.discrete = discrete
-        self.state_memory = np.zeros((self.mem_size, input_shape))
-        self.new_state_memory = np.zeros((self.mem_size, input_shape))
+        self.state_memory = np.zeros((self.mem_size, input_shape[0], input_shape[1]))
+        self.new_state_memory = np.zeros((self.mem_size, input_shape[0], input_shape[1]))
         self.mem_cntr = 0
         dtype = np.int8 if self.discrete else np.float32
         self.action_memory = np.zeros((self.mem_size, n_actions), dtype=dtype)
@@ -52,12 +52,23 @@ class ReplayBuffer(object):
     
 
 def build_dqn(lr, n_actions, input_dim, fc1_dims, fc2_dims):
+    '''
     model = Sequential([
                 Dense(fc1_dims, input_shape=(input_dim, ), activation='relu'),
                 Dense(fc2_dims, activation='relu'),
                 Dense(n_actions)
         
         ])
+    '''
+    model = Sequential([
+            LSTM(units=64, input_dim=5, return_sequences=True),
+            Dropout(0.2),
+            LSTM(units=64),
+            Dropout(0.2),
+            Dense(n_actions)
+
+        ])
+    
     model.compile(optimizer=Adam(lr=lr), loss='mse')
     return model
 
