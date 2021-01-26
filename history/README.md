@@ -1,6 +1,10 @@
 # History
 I denne filen kan man skrive historie/logg hvis man har lyst. Bilder er kult.
 
+### [26.01.2021]
+Nå lærer den men det er vanskelig å lage miljøet riktig til at den lærer...
+<img src="../images/rl_bad1.png" width="500" alt="df"/><br>
+
 ### [15.01.2021]
 Satt opp mulighet til å se grafisk hvor det handler. Etter 10 episoder handler den 70-90 handler og det er aaalt for mye.  
 Her ser man hvordan det kan se ut. Grønn er kjøp og rød er salg  
