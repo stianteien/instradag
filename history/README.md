@@ -2,7 +2,7 @@
 I denne filen kan man skrive historie/logg hvis man har lyst. Bilder er kult.
 
 ### [26.01.2021]
-Nå lærer den men det er vanskelig å lage miljøet riktig til at den lærer...
+Nå lærer den men det er vanskelig å lage miljøet riktig til at den lærer...  
 <img src="../images/rl_bad1.png" width="500" alt="df"/><br>
 
 ### [15.01.2021]
