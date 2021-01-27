@@ -61,11 +61,12 @@ def build_dqn(lr, n_actions, input_dim, fc1_dims, fc2_dims):
         ])
     '''
     model = Sequential([
-            LSTM(units=64, input_dim=5, return_sequences=True),
+            LSTM(units=256, input_dim=5, return_sequences=True),
             Dropout(0.2),
-            LSTM(units=64),
+            LSTM(units=256),
             Dropout(0.2),
-            Dense(n_actions)
+            Dense(128, activation='relu'),
+            Dense(n_actions, activation='softmax')
 
         ])
     
