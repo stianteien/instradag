@@ -11,7 +11,7 @@ In this file all indicators is made
 import pandas as pd
 import numpy as np
 import stockstats
-from lib.rens import rens
+from rens import rens
 
 pd.options.mode.use_inf_as_na = True
 
@@ -39,10 +39,18 @@ class make_ready:
             stock['sma8-16'] = [stock.open_8_sma[i] - stock.open_16_sma[i] for i, value in enumerate(stock.open_8_sma)]
             stock['sma30_derivert'] = [stock.open_30_sma[i] / stock.open_30_sma[i-1] if i>1 else 1 
                                        for i, value in enumerate(stock.open_30_sma)]
-            stock['sma15_derivert'] = [stock.open_15_sma[i] / stock.open_15_sma[i-1] if i>1 else 1 
+            stock['sma15_derivert'] = [stock.open_15_sma[i] / stock.open_15_sma[i-1] if i>1 else 1
                                        for i, value in enumerate(stock.open_15_sma)]
             stock['derivert'] = [stock.open[i] / stock.open[i-1] if i>1 else 1
                                  for i, value in enumerate(stock.open)]
+            
+            # Ta å normaliser rundt 0 for det som er mulig
+            stock['rsi_20'] /= 100
+            stock['rsi_20'] -= 0.5
+            stock['sma30_derivert'] -= 1
+            stock['sma15_derivert'] -= 1
+            stock['derivert'] -= 1
+            
     
             # Fill nan verdier med tilpassede initialverdier
             stock = self.fillna(stock)
