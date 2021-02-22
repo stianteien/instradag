@@ -1,6 +1,11 @@
 # History
 I denne filen kan man skrive historie/logg hvis man har lyst. Bilder er kult.
 
+### [22.02.2021]
+Løst miljøet med å gi premie for alle gangene den er inne (1). Løser miljøet ganske godt.  
+Brukt både DDQP og A2C. Neste blir å fjerne småshopping.  
+<img src="../images/rl_god1.png" width="500" alt="df"/><br>
+
 ### [26.01.2021]
 Nå lærer den men det er vanskelig å lage miljøet riktig til at den lærer...  
 <img src="../images/rl_bad1.png" width="500" alt="df"/><br>
