@@ -10,7 +10,7 @@ making ready for stockstats
 
 import pandas as pd
 #fil = pd.read_excel('../data/test/Equinor 12.11.2020.xlsx')
-#fil = pd.read_excel('../data/Aker 02.04.2020.xlsx')
+#fil = pd.read_excel('../data/Aker BP 11.12.2020.xlsx')
 
 class rens:
     def __init__(self):
@@ -19,6 +19,7 @@ class rens:
     def clean_data(self, data):
         self.data = data
         self.data = self.data.rename(columns={self.data.columns[0]: "tid"})
+        
         self.data = self.data.drop(columns=['Kjøper', 'Selger', 'Type'])
         if type(self.data.tid[0]) == str:
             self.data['tid'] = pd.to_datetime(self.data['tid'], format='%d.%m.%Y %H:%M:%S')

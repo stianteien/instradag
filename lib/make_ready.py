@@ -33,7 +33,9 @@ class make_ready:
             print(f"{i+1} av {len(filer)} renset" ,end='\r')
             data = rens().clean_data(pd.read_excel(fil))
             stock = stockstats.StockDataFrame.retype(data)
-            indikatorer = ['rsi_20', 'trix', 'open_8_sma', 'open_16_sma', 'macds', 'open_30_sma', 'open_15_sma']
+            indikatorer = ['rsi_20', 'trix', 'open_8_sma', 'open_16_sma',
+                           'macds', 'open_30_sma', 'open_15_sma', 'open_3_sma',
+                           'adx']
             for ind in indikatorer:
                 stock.get(ind)
             stock['sma8-16'] = [stock.open_8_sma[i] - stock.open_16_sma[i] for i, value in enumerate(stock.open_8_sma)]
@@ -44,11 +46,23 @@ class make_ready:
             stock['derivert'] = [stock.open[i] / stock.open[i-1] if i>1 else 1
                                  for i, value in enumerate(stock.open)]
             
+            #Gjennomsnitt fra forann og bak
+            span = 8 # 0 1 2 _3_ 4 5 6
+            stock['open_mean'] = stock.open.rolling(span, center=True).mean()
+            stock['open_mean'] = stock['open_mean'].fillna(stock.open)
+            
             # Ta å normaliser rundt 0 for det som er mulig
             stock['rsi_20'] /= 100
             stock['rsi_20'] -= 0.5
             stock['sma30_derivert'] -= 1
+            stock['sma30_derivert'] *= 800 # Få dem opp med resten
             stock['sma15_derivert'] -= 1
+            stock['sma15_derivert'] *= 800
+            
+            stock['trix'] *= 10
+            stock['adx'] /= 100
+            stock['adx'] -= .25
+            
             stock['derivert'] -= 1
             
     
