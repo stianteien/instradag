@@ -1,6 +1,11 @@
 # History
 I denne filen kan man skrive historie/logg hvis man har lyst. Bilder er kult.
 
+### [09.03.2021]
+Løser miljøet men shopper fortsatt en del. Klarer å fjerne en del ved å legge på konstander ved kjøp og salg.  
+<img src="../images/løst_men_shopping.png" width="500" alt="df"/><br>
+
+
 ### [22.02.2021]
 Løst miljøet med å gi premie for alle gangene den er inne (1). Løser miljøet ganske godt.  
 Brukt både DDQP og A2C. Neste blir å fjerne småshopping.  
