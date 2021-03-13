@@ -13,11 +13,11 @@ from tensorflow.keras import layers
 
 
 class a2cAgent(object):
-    def __init__(self, n_actions, input_dims, batch_size):
+    def __init__(self, n_actions, input_dims, batch_size=64):
         self.n_actions = n_actions
         self.input_dims = input_dims
-        self.batch_size = batch_size
         self.model = self.make_net()
+        self.batch_size = batch_size
         self.critic_value_history = []
         self.action_probs_history = []
         self.action_history = []
@@ -32,12 +32,10 @@ class a2cAgent(object):
         #common = layers.Dense(256, activation="relu")(common)
         
         # For stocks
-        inputs = layers.Input(shape=self.input_dims)
-        common = layers.LSTM(units=128, return_sequences=True)(inputs)
-        drop1 = layers.Dropout(0.2)(common)
-        common = layers.LSTM(units=128)(drop1)
-        drop2 = layers.Dropout(0.2)(common)
-        common = layers.Dense(64, activation='relu')(drop2)
+        inputs = layers.Input(shape=(30,6,))
+        x = layers.LSTM(units=128, return_sequences=True)(inputs)
+        x = layers.LSTM(units=128)(x)
+        common = layers.Dense(64, activation='relu')(x)
         
         
         action = layers.Dense(self.n_actions, activation="softmax")(common)
@@ -63,7 +61,7 @@ class a2cAgent(object):
         # Need buy index, sold index and gevinst for trade
         # info: (pris, buy_ix, sell_ix, gevinst)
         # reward_history = [0,0,0,1(buy),2,3,4,5(sell)]
-        # KAN være indekseringen er 1 feil i fronten men tror ikke
+        # KAN vÃƒÂ¦re indekseringen er 1 feil i fronten men tror ikke
         pris, buy_indexes, sell_indexes, gevinster = info
         look_back = 30
         #returns = []
@@ -71,34 +69,55 @@ class a2cAgent(object):
         #self.reward_history[buy_index[0] - look_back]
         for buy_ix, sell_ix in zip(buy_indexes, sell_indexes):
             gevinst = self.reward_history[sell_ix- look_back]
-            ny_gevinster = [gevinst/j for j in range(sell_ix-buy_ix+1, 0, -1)]
+            ny_gevinster = [gevinst for j in range(sell_ix-buy_ix+1, 0, -1)]
             for i, ix in enumerate(range(buy_ix, sell_ix)):
                 self.reward_history[ix - look_back] = ny_gevinster[i]
             
         #self.reward_history[sell_index[2]- look_back]
         
-    def punish_shopping(self, info):
+    def punish_shopping(self):
+        # Prøv å unngå å bruke info men bruk det som er lagret i agent allerede
+        cost = 15
+        buy_index = 0
+        status = 0
+        for i, j in enumerate(zip(self.action_history, self.reward_history)):
+            action, reward = j
+            if action and not status:
+                status = 1
+                buy_index = i
+        
+            elif status and not action:
+                # Sells and do everything here
+                status = 0
+                self.reward_history[buy_index:i+1] -= (cost/(i+1-buy_index))
+                
+        self.reward_history = self.reward_history.tolist()
+                
+        
+    def punish_shopping_progresiv(self):
         # Takes total earning that round and takes minus the cost of sales
-        # 0,08% minst
+        # 0,08% minst, men hva er det da??
+        # Progresivt!
         
-        epsilon = 0.08*100
+        cost = 8
+        buy_index = 0
+        status = 0
+        self.reward_history = np.array(self.reward_history)
+        for i, j in enumerate(zip(self.action_history, self.reward_history)):
+            action, reward = j
+            if action and not status:
+                status = 1
+                buy_index = i
         
-        pris, buy_indexes, sell_indexes, gevinster = info
-        look_back = 30
-        for buy_ix, sell_ix in zip(buy_indexes, sell_indexes):
-            #eps = sum(self.reward_history[buy_ix - look_back:sell_ix - look_back])*epsilon
-            eps = epsilon
-            # Sum all gevinst from buy_ix to sell_ix
-            if sell_ix != buy_ix:
-                gevinst_straff = eps/(sell_ix-buy_ix)
-            else:
-                gevinst_straff = eps
-            
-            for i, ix in enumerate(range(buy_ix, sell_ix)):
-                self.reward_history[ix - look_back] -= gevinst_straff
+            elif status and not action:
+                # Sells and do everything here
+                status = 0
+                magnitude = abs(self.reward_history[buy_index:i+1])
+                percent = magnitude/(sum(magnitude) + np.finfo(np.float32).eps.item())
+                self.reward_history[buy_index:i+1] -= percent*cost
+        
+        self.reward_history = self.reward_history.tolist()
 
-        
-        
     
     def discount_reward(self):
         gamma = 0.99
@@ -117,11 +136,11 @@ class a2cAgent(object):
         
         
     def learn(self, tape):
-        # == Pick out random from batch ==
+        #  == Pick out random from batch ==
         max_size = min(len(self.reward_history), self.batch_size)
         self.indexes = np.random.choice(len(self.reward_history), self.batch_size, replace=False)
         
-
+        # ? Tensors in list need to do thiis..
         history = zip([self.action_probs_history[i] for i in range(len(self.indexes))],
                       [self.critic_value_history[i] for i in range(len(self.indexes))], 
                       [self.reward_history[i] for i in range(len(self.indexes))])
@@ -143,15 +162,12 @@ class a2cAgent(object):
             )
             
         # Backpropagation
-        self.loss_value = sum(actor_losses) + sum(critic_losses)
-        self.grads = tape.gradient(self.loss_value, self.model.trainable_variables)
-        self.optimizer.apply_gradients(zip(self.grads, self.model.trainable_variables))
+        loss_value = sum(actor_losses) + sum(critic_losses)
+        grads = tape.gradient(loss_value, self.model.trainable_variables)
+        self.optimizer.apply_gradients(zip(grads, self.model.trainable_variables))
 
         # Clear the loss and reward history
-        #self.action_probs_history = self.action_probs_history.tolist().clear()
-        #self.critic_value_history = self.critic_value_history.tolist().clear()
-        #self.reward_history = self.reward_history.tolist().clear()
-        #self.action_probs_history.clear()
+        self.action_probs_history.clear()
         self.critic_value_history.clear()
         self.reward_history.clear()
         self.action_history.clear()
