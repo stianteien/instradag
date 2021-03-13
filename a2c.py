@@ -13,12 +13,14 @@ from tensorflow.keras import layers
 
 
 class a2cAgent(object):
-    def __init__(self, fc1, fc2, n_actions, input_dims):
+    def __init__(self, n_actions, input_dims, batch_size):
         self.n_actions = n_actions
         self.input_dims = input_dims
+        self.batch_size = batch_size
         self.model = self.make_net()
         self.critic_value_history = []
         self.action_probs_history = []
+        self.action_history = []
         self.reward_history = []
         self.huber_loss = keras.losses.Huber()
         self.optimizer = keras.optimizers.Adam(learning_rate=0.01)
@@ -30,7 +32,7 @@ class a2cAgent(object):
         #common = layers.Dense(256, activation="relu")(common)
         
         # For stocks
-        inputs = layers.Input(shape=(30,4,))
+        inputs = layers.Input(shape=self.input_dims)
         common = layers.LSTM(units=128, return_sequences=True)(inputs)
         drop1 = layers.Dropout(0.2)(common)
         common = layers.LSTM(units=128)(drop1)
@@ -52,6 +54,7 @@ class a2cAgent(object):
         self.critic_value_history.append(critic_value[0, 0])
         action = np.random.choice(self.n_actions, p=np.squeeze(action_probs))
         self.action_probs_history.append(tf.math.log(action_probs[0, action]))
+        self.action_history.append(action)
         
         return action
     
@@ -114,7 +117,14 @@ class a2cAgent(object):
         
         
     def learn(self, tape):
-        history = zip(self.action_probs_history, self.critic_value_history, self.reward_history)
+        # == Pick out random from batch ==
+        max_size = min(len(self.reward_history), self.batch_size)
+        self.indexes = np.random.choice(len(self.reward_history), self.batch_size, replace=False)
+        
+
+        history = zip([self.action_probs_history[i] for i in range(len(self.indexes))],
+                      [self.critic_value_history[i] for i in range(len(self.indexes))], 
+                      [self.reward_history[i] for i in range(len(self.indexes))])
         actor_losses = []
         critic_losses = []
         for log_prob, value, ret in history:
@@ -133,14 +143,18 @@ class a2cAgent(object):
             )
             
         # Backpropagation
-        loss_value = sum(actor_losses) + sum(critic_losses)
-        grads = tape.gradient(loss_value, self.model.trainable_variables)
-        self.optimizer.apply_gradients(zip(grads, self.model.trainable_variables))
+        self.loss_value = sum(actor_losses) + sum(critic_losses)
+        self.grads = tape.gradient(self.loss_value, self.model.trainable_variables)
+        self.optimizer.apply_gradients(zip(self.grads, self.model.trainable_variables))
 
         # Clear the loss and reward history
-        self.action_probs_history.clear()
+        #self.action_probs_history = self.action_probs_history.tolist().clear()
+        #self.critic_value_history = self.critic_value_history.tolist().clear()
+        #self.reward_history = self.reward_history.tolist().clear()
+        #self.action_probs_history.clear()
         self.critic_value_history.clear()
         self.reward_history.clear()
+        self.action_history.clear()
         
     def save_model(self, fname):
         self.model.save(fname)
