@@ -138,7 +138,7 @@ class a2cAgent(object):
     def learn(self, tape):
         #  == Pick out random from batch ==
         max_size = min(len(self.reward_history), self.batch_size)
-        self.indexes = np.random.choice(len(self.reward_history), self.batch_size, replace=False)
+        self.indexes = np.random.choice(len(self.reward_history), max_size, replace=False)
         
         # ? Tensors in list need to do thiis..
         history = zip([self.action_probs_history[i] for i in range(len(self.indexes))],
@@ -167,6 +167,12 @@ class a2cAgent(object):
         self.optimizer.apply_gradients(zip(grads, self.model.trainable_variables))
 
         # Clear the loss and reward history
+        #self.action_probs_history.clear()
+        #self.critic_value_history.clear()
+        #self.reward_history.clear()
+        #self.action_history.clear()
+        
+    def forget_epsiode(self):
         self.action_probs_history.clear()
         self.critic_value_history.clear()
         self.reward_history.clear()
