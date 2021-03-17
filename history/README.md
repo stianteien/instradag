@@ -1,6 +1,10 @@
 # History
 I denne filen kan man skrive historie/logg hvis man har lyst. Bilder er kult.
 
+### [17.03.2021]
+Etter å ha trent og manipulert kostnaden for kjøp får jeg godt resultat på en aksje. Spennende å se om dette kan gjøres på fler :)  
+<img src="../images/rl_best_aker.png" width="500" alt="df"/><br>
+
 ### [09.03.2021]
 Løser miljøet men shopper fortsatt en del. Klarer å fjerne en del ved å legge på konstander ved kjøp og salg.  
 <img src="../images/løst_men_shopping.png" width="500" alt="df"/><br>
@@ -8,7 +12,7 @@ Løser miljøet men shopper fortsatt en del. Klarer å fjerne en del ved å legg
 
 ### [22.02.2021]
 Løst miljøet med å gi premie for alle gangene den er inne (1). Løser miljøet ganske godt.  
-Brukt både DDQP og A2C. Neste blir å fjerne småshopping.  
+Brukt både DDQP og A2C. Neste blir å fjerne småshopping.  Gått over til colab for raskere gjennomkjøring.
 <img src="../images/rl_god1.png" width="500" alt="df"/><br>
 
 ### [26.01.2021]
