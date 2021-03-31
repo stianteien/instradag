@@ -3,6 +3,7 @@ I denne filen kan man skrive historie/logg hvis man har lyst. Bilder er kult.
 
 ### [31.03.2021]  
 Fått mulighet til å pretraine nette. Ser bra ut, men spørs forsatt om dette funker generelt  
+Byttet samtidig litt arkitertur på på nette til bidirect..  
 <img src="../images/rl_pretrained.png" width="500" alt="df"/><br>
 
 ### [17.03.2021]
