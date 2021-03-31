@@ -1,6 +1,10 @@
 # History
 I denne filen kan man skrive historie/logg hvis man har lyst. Bilder er kult.
 
+### [31.03.2021]  
+Fått mulighet til å pretraine nette. Ser bra ut, men spørs forsatt om dette funker generelt  
+<img src="../images/rl_pretrained.png" width="500" alt="df"/><br>
+
 ### [17.03.2021]
 Etter å ha trent og manipulert kostnaden for kjøp får jeg godt resultat på en aksje. Spennende å se om dette kan gjøres på fler :)  
 <img src="../images/rl_best_aker.png" width="500" alt="df"/><br>
