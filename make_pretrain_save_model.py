@@ -1,5 +1,12 @@
 # -*- coding: utf-8 -*-
 """
+Created on Tue Apr  6 13:02:36 2021
+
+@author: Stian
+"""
+
+# -*- coding: utf-8 -*-
+"""
 Created on Mon Mar 29 22:07:46 2021
 
 @author: Stian
@@ -108,8 +115,7 @@ def make_model(LSTMneuron=128, DenseNeuron=64, CNNneurons=16,
     
     # Add Dense
     for n in range(n_dense):
-        model.add(Dense(DenseNeuron, activation='relu', bias_regularizer=))
-
+        model.add(Dense(DenseNeuron, activation='relu'))
        
     # Output
     model.add(Dense(2, activation='softmax'))     
@@ -124,21 +130,16 @@ def make_model(LSTMneuron=128, DenseNeuron=64, CNNneurons=16,
 tid1 = time.time()
 
 # make model and pipeline
-model = KerasClassifier(build_fn=make_model,
-                        LSTMneuron=128, DenseNeuron=64, CNNneurons=16,
-                        n_dense=1, n_lstm=2,
-                        dropout_rate=0,
-                        epochs=15, verbose=0)
-pl = make_pipeline(model)
+
 
 # get data
 shopping = Punish_shopping()
-shopping.cost = 30
+shopping.cost = 40
 
 ekstra = '/content/gdrive/My Drive/intradag/'
 path = ekstra+'data_clean/'
 np.random.seed(1)
-filer = np.random.choice(os.listdir(path), 14)
+filer = np.random.choice(os.listdir(path), 60)
 #filer = ['Aker BP 11.12.2020.xlsx']
 
 #prepare_for_lstm()
@@ -152,83 +153,45 @@ for fil in filer:
 X = np.array(X)
 actions = np.array(actions)
 
+acc = []
+val_acc = []
+z = 2
+for i in range(z):
+    print(f"Cross validation {i+1} of {z}")
+    X_train, X_test, y_train, y_test = train_test_split(
+             X, actions, test_size=0.2, shuffle=True, stratify=actions, random_state=i)
+    
+    model = make_model(LSTMneuron=64, DenseNeuron=64, n_dense=3, n_lstm=2)   
+    # Make a training curve and print results
+    h = model.fit(X_train,y_train,
+                  epochs=42,validation_data=(X_test, y_test),verbose=0)
+    acc.append(h.history['accuracy'])
+    val_acc.append(h.history['val_accuracy'])
 
-# Fit net
-# best: lstm 64, dense 64, 15 epochs, ndense:3, nlstm:2
+acc = np.array(acc)
+val_acc = np.array(val_acc)
 
-param_grid = {'kerasclassifier__epochs':[15],
-              'kerasclassifier__LSTMneuron':[64],
-              'kerasclassifier__DenseNeuron':[64],
-              'kerasclassifier__n_dense': [3],
-              'kerasclassifier__n_lstm': [2],
-              'kerasclassifier__dropout_rate': [0]
-              #'kerasclassifier__CNNneurons': [8, 16, 32, 64, 128, 256]
+train_scores_mean = np.mean(acc, axis=0); train_scores_std = np.std(acc, axis=0)
+test_scores_mean = np.mean(val_acc, axis=0); test_scores_std = np.std(val_acc, axis=0)
 
-            
-              }
-clf = GridSearchCV(estimator=pl, param_grid= param_grid, n_jobs=-1,
-                   cv=4,  verbose=4)
-clf.fit(X,actions)
-
-
-'''
-# Fit net with randomsearch
-a_dist = np.abs(np.round(np.random.normal(100,50,1000)))
-a_dist[a_dist <= 0]  = 0
-
-b_dist = np.abs(np.round(np.random.normal(10,5,1000)))
-b_dist[b_dist <= 1] = 1
-
-dist = {'kerasclassifier__epochs':[15],
-        'kerasclassifier__LSTMneuron': [64],
-        'kerasclassifier__DenseNeuron': [64,128],
-        'kerasclassifier__n_dense': [2],
-        'kerasclassifier__n_lstm': [2]}
-clf =  RandomizedSearchCV(estimator=pl, param_distributions=dist, n_jobs=-1,
-                          n_iter=1,
-                          cv=5, verbose=2, random_state=1)
-clf.fit(X, actions)
-'''
-
-print("Best: %f using %s" % (clf.best_score_, clf.best_params_))
-means = clf.cv_results_['mean_test_score']
-stds = clf.cv_results_['std_test_score']
-params = clf.cv_results_['params']
-for mean, stdev, param in zip(means, stds, params):
-    print("%.4f +-(%.4f) with: %r" % (mean, stdev, param))
-
-tid2 = time.time()
-#print(f"tid brukt i sekund: {tid2-tid1}:.2f, i minutter: {(tid2-tid1)/60}:.2f")
-
-# Save the results?
-results = pd.DataFrame()
-results['mean'] = means
-results['std'] = stds
-results['params'] = params
-results.to_csv(ekstra+'clf_results.csv')
-
-
-# Make a training curve and print results
-train_sizes, train_scores, test_scores = learning_curve(estimator=clf.best_estimator_,
-                                                       X=X,
-                                                       y=actions,
-                                                       cv=5)
-
-train_scores_mean = np.mean(train_scores, axis=1); train_scores_std = np.std(train_scores, axis=1)
-test_scores_mean = np.mean(test_scores, axis=1); test_scores_std = np.std(test_scores, axis=1)
+train_sizes = [i for i in range(acc.shape[1])]
 plt.grid()
+
 plt.fill_between(train_sizes, train_scores_mean - train_scores_std,
                          train_scores_mean + train_scores_std, alpha=0.1, color="r")
 plt.fill_between(train_sizes, test_scores_mean - test_scores_std,
                          test_scores_mean + test_scores_std, alpha=0.1, color="g")
 plt.plot(train_sizes, train_scores_mean, 'o-', color="r", label="Training score")
 plt.plot(train_sizes, test_scores_mean, 'o-', color="g", label="Cross-validation score")
-plt.xlabel('Training examples')
+plt.xlabel('Epochs')
 plt.ylabel('Accuracy')
 plt.legend(loc="best")
-#plt.title('Score: '+ np.round(train_scores_mean[-1],5))
 plt.show()
-print(f"Score: {test_scores_mean[-1]}")
+
+print('Traning last model')
+model = make_model(LSTMneuron=64, DenseNeuron=64, n_dense=3, n_lstm=2) 
+model.fit(X,actions, epochs=40, verbose=0)
+model.save(ekstra+'ddqp_pretrained.h5')
 
 
 
