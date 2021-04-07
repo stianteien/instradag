@@ -15,3 +15,4 @@ filer = os.listdir('../data')
 for fil in filer:
     df = make_ready().use_stockstats(['../data/'+fil])[0]
     df.to_excel('../data_clean/'+fil, index=False)
+    print(f"Gjort om to data_clean: {fil}")

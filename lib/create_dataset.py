@@ -20,32 +20,35 @@ class create_dataset:
     
     def create(self, dataset, true_price, look_back = 1, look_forward = 1):
         
-        # Standarised
-        sc = preprocessing.StandardScaler()
-        dataset = sc.fit_transform(dataset)
-    
+        # Standarised -- DET ER JO STANDARISERT ALLEREDE!
+        #sc = preprocessing.StandardScaler()
+        #dataset = sc.fit_transform(dataset)
+        
+        if type(dataset) is not np.ndarray:
+            dataset = dataset.to_numpy()
         lookback = look_back
         trueprice = []
         datax = []
         datay = []
     
         for i,v in enumerate(dataset):
-            if i > lookback + look_forward:
-                datax.append([dataset[i-j] for j in range(lookback+look_forward, look_forward, -1)])
-                datay.append([true_price[i-j] for j in range(look_forward, 0, -1)])   
+            if i >= lookback -1:
+                datax.append([dataset[j] for j in range(i-lookback+1, i+1, 1)])
+                datay.append(true_price[i])   
         
         trueprice = [i for i in true_price]
         datax = np.array(datax)
         datay = np.array(datay)
         trueprice = np.array(trueprice)
         
-        # Standardize y data for å skille dem fra hverandre
-        mean = [1 for _ in range(datay.shape[1])]
-        std = [0.0006 for _ in range(datay.shape[1])]
-        datay -= mean
-        trueprice -= mean[0]
         
-        datay /= std
-        trueprice /= std[0]
+        # Standardize y data for å skille dem fra hverandre
+        #mean = [1 for _ in range(datay.shape[1])]
+        #std = [0.0006 for _ in range(datay.shape[1])]
+        #datay -= mean
+        #trueprice -= mean[0]
+        
+        #datay /= std
+        #trueprice /= std[0]
         
         return datax, datay, trueprice
