@@ -8,7 +8,10 @@ Created on Sat Jan  9 14:57:12 2021
 import numpy as np
 import gym
 
-env = gym.make('Acrobot-v1')
+agent = a2cAgent(fc1=512, fc2=512, n_actions=4, input_dims=8)
+agent.load_model('a2c_best.h5')
+
+env = gym.make('LunarLander-v2')
 
 history_score = []
 running_reward = 0
@@ -23,14 +26,14 @@ while not done:
     env.render()
     action = agent.choose_action(observation)
     observation_, reward, done, info = env.step(action)
-    score += reward
-    print(reward)    
+    score += reward  
+    #print(score)
     
     observation = observation_
         
     count += 1
-    if count >= 250:
-        done = True
+    #if count >= 250:
+    #    done = True
             
             
 env.close()
