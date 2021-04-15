@@ -1,6 +1,11 @@
 # History
 I denne filen kan man skrive historie/logg hvis man har lyst. Bilder er kult.
 
+### [15.04.2021]  
+Hva er ønskelig å ha som fasit? Målet er mest mulig gevinst med så få som mulig handler.  
+Her er simulering med snitt og standardavvik fra 20 forskjellige dager der X aksen er punish factoren.  
+<img src="../images/how_much_punish.png" width="500" alt="df"/><br>
+
 ### [31.03.2021]  
 Fått mulighet til å pretraine nette. Ser bra ut, men spørs forsatt om dette funker generelt  
 Byttet samtidig litt arkitertur på på nette til bidirect..  

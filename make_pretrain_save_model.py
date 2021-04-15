@@ -38,12 +38,23 @@ from sklearn.decomposition import PCA
 from sklearn.model_selection import learning_curve
 from sklearn.model_selection import RandomizedSearchCV
 
+import keras.backend as K
+
 #import sklearn
 #if sklearn.__version__ == '1.0.dev0' or int(sklearn.__version__.split('.')[1]) >= 24:
 #    from sklearn.experimental import enable_halving_search_cv
 #    from sklearn.model_selection import HalvingGridSearchCV
 #    print('Halving imported')
 
+
+def get_f1(y_true, y_pred): #taken from old keras source code
+    true_positives = K.sum(K.round(K.clip(y_true * y_pred, 0, 1)))
+    possible_positives = K.sum(K.round(K.clip(y_true, 0, 1)))
+    predicted_positives = K.sum(K.round(K.clip(y_pred, 0, 1)))
+    precision = true_positives / (predicted_positives + K.epsilon())
+    recall = true_positives / (possible_positives + K.epsilon())
+    f1_val = 2*(precision*recall)/(precision+recall+K.epsilon())
+    return f1_val
 
 def lstm_prepare(data):
     dataxes = []
@@ -90,7 +101,7 @@ def Xy(filnavn):
     rewards = shopping.punish_shopping_progressiv(np.argmax(actions,axis=1), rewards)
     actions = change_action(actions, rewards)
     
-    return X, actions
+    return X, actions, pris
 
 
 def make_model(LSTMneuron=128, DenseNeuron=64, CNNneurons=16,
@@ -122,7 +133,7 @@ def make_model(LSTMneuron=128, DenseNeuron=64, CNNneurons=16,
 
     model.compile(optimizer=Adam(lr=0.0005), 
                   loss='binary_crossentropy',
-                  metrics=["accuracy"])
+                  metrics=["accuracy", get_f1])
     
     return model
 
@@ -130,29 +141,95 @@ def make_model(LSTMneuron=128, DenseNeuron=64, CNNneurons=16,
 tid1 = time.time()
 
 # make model and pipeline
+all_result_handler = []
+all_result_gevinst = []
+for r in range(20):
+    # get data
+    print(r)
+    result_handler = []
+    result_gevinst = []
+    p =  [5,7,9,11,13,15,17,19,21,23,25,27,29,31,33,35,37,39,41]
+    for punish in p:
+        shopping = Punish_shopping()
+        shopping.cost = punish#33
+        
+        ekstra = '/content/gdrive/My Drive/intradag/'
+        path = 'data_clean/'
+        np.random.seed(r)
+        filer = np.random.choice(os.listdir(path), 1)
+        #filer = ['Aker BP 11.12.2020.xlsx']
+        
+        #prepare_for_lstm()
+        X = []
+        actions = []
+        priser = []
+        for fil in filer:
+            x, action, pris = Xy(path+fil)
+            #X.extend(x)
+            #actions.extend(action)
+            X.append(x)
+            actions.append(action)
+            priser.append(pris)
+        
+        X = np.array(X, dtype=object)
+        actions = np.array(actions, dtype=object)
+        #print(f"shape of X: {X.shape}")
+        
+        for ax, prices in zip(actions, priser):
+            buy_index = []
+            sell_index = []
+            gevinst = []
+            forrige = 0
+            for i, a in enumerate(np.argmax(ax, axis=1)):
+                if a == 1 and forrige == 0: # kjøp
+                    buy_index.append(i)
+                elif a == 0 and forrige == 1:
+                    sell_index.append(i)
+                forrige = a
+                
+            #plt.plot(prices)
+            for j in range(len(sell_index)):
+            #    plt.axvspan(buy_index[j], sell_index[j], alpha=0.3, color='green')
+                gevinst.append((prices[sell_index[j]]/prices[buy_index[j]]-1)*100 - 0.08)
+            #plt.show()
+            
+            result_handler.append(len(sell_index))
+            result_gevinst.append(sum(gevinst))
+    '''  
+    fig, ax1 = plt.subplots()
+    l1 = ax1.plot(p, result_gevinst, label="gevinst i %")
+    ax1.set_ylabel("gevinst i %")
+    ax1.set_xlabel("punish factor")
+    ax2 = ax1.twinx()
+    l2 = ax2.plot(p, result_handler, color="red", label="handler")
+    ax2.set_ylabel("handler")
+    labs = [l.get_label() for l in l1+l2]
+    ax1.legend(l1+l2, labs, loc=0)
+    plt.show()
+    '''
+    all_result_handler.append(result_handler)
+    all_result_gevinst.append(result_gevinst)
+    
+all_result_handler = np.array(all_result_handler)
+all_result_gevinst = np.array(all_result_gevinst)
 
+m_h = np.mean(all_result_handler, axis=0); std_h = np.std(all_result_gevinst, axis=0)
+m_g = np.mean(all_result_gevinst, axis=0); std_g = np.std(all_result_gevinst, axis=0)
 
-# get data
-shopping = Punish_shopping()
-shopping.cost = 40
-
-ekstra = '/content/gdrive/My Drive/intradag/'
-path = ekstra+'data_clean/'
-np.random.seed(1)
-filer = np.random.choice(os.listdir(path), 60)
-#filer = ['Aker BP 11.12.2020.xlsx']
-
-#prepare_for_lstm()
-X = []
-actions = []
-for fil in filer:
-    x, action = Xy(path+fil)
-    X.extend(x)
-    actions.extend(action)
-
-X = np.array(X)
-actions = np.array(actions)
-
+fig, ax1 = plt.subplots()
+l1 = ax1.plot(p, m_g, label="gevinst i %")
+ax1.fill_between(p, m_g + std_g, m_g - std_g, alpha=0.2, color='blue')
+ax1.set_ylabel("gevinst i %")
+ax1.set_xlabel("punish factor")
+ax2 = ax1.twinx()
+l2 = ax2.plot(p, m_h, color="red", label="handler")
+ax2.fill_between(p, m_h + std_h, m_h - std_h, alpha=0.2, color='red')
+ax2.set_ylabel("handler")
+labs = [l.get_label() for l in l1+l2]
+ax1.legend(l1+l2, labs, loc=0)
+plt.show()
+ 
+'''
 acc = []
 val_acc = []
 z = 2
@@ -164,7 +241,7 @@ for i in range(z):
     model = make_model(LSTMneuron=64, DenseNeuron=64, n_dense=3, n_lstm=2)   
     # Make a training curve and print results
     h = model.fit(X_train,y_train,
-                  epochs=42,validation_data=(X_test, y_test),verbose=0)
+                  epochs=80,validation_data=(X_test, y_test),verbose=0)
     acc.append(h.history['accuracy'])
     val_acc.append(h.history['val_accuracy'])
 
@@ -176,24 +253,25 @@ test_scores_mean = np.mean(val_acc, axis=0); test_scores_std = np.std(val_acc, a
 
 train_sizes = [i for i in range(acc.shape[1])]
 plt.grid()
-
 plt.fill_between(train_sizes, train_scores_mean - train_scores_std,
                          train_scores_mean + train_scores_std, alpha=0.1, color="r")
 plt.fill_between(train_sizes, test_scores_mean - test_scores_std,
                          test_scores_mean + test_scores_std, alpha=0.1, color="g")
-plt.plot(train_sizes, train_scores_mean, 'o-', color="r", label="Training score")
-plt.plot(train_sizes, test_scores_mean, 'o-', color="g", label="Cross-validation score")
+plt.plot(train_sizes, train_scores_mean, '-', color="r", label="Training score")
+plt.plot(train_sizes, test_scores_mean, '-', color="g", label="Cross-validation score")
 plt.xlabel('Epochs')
 plt.ylabel('Accuracy')
 plt.legend(loc="best")
+plt.ylim(top=1.001)
 plt.show()
 
-print('Traning last model')
+epochs = 77#np.argmax(test_scores_mean) + 1
+print(f'Traning last model with {epochs} epochs')
 model = make_model(LSTMneuron=64, DenseNeuron=64, n_dense=3, n_lstm=2) 
-model.fit(X,actions, epochs=40, verbose=0)
+model.fit(X,actions, epochs=epochs, shuffle=True, verbose=1)
 model.save(ekstra+'ddqp_pretrained.h5')
 
 
 
 #loss: 0.0842 - val_loss: 0.1078
-# med 1 min vanlige den er god: loss: 0.0276 - val_loss: 0.0303
+# med 1 min vanlige den er god: loss: 0.0276 - val_loss: 0.0303 '''
