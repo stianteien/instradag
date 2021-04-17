@@ -1,6 +1,10 @@
 # History
 I denne filen kan man skrive historie/logg hvis man har lyst. Bilder er kult.
 
+### [17.04.2021]
+Gradienten til kurven avgjør brattheten. Her ser man at det faller fort i gevinst lenger ute, men stopper realtivt med falling i handel raskt..  
+<img src="../images/punish_gradient.png" width="500" alt="df"/><br>
+
 ### [15.04.2021]  
 Hva er ønskelig å ha som fasit? Målet er mest mulig gevinst med så få som mulig handler.  
 Her er simulering med snitt og standardavvik fra 20 forskjellige dager der X aksen er punish factoren.  
